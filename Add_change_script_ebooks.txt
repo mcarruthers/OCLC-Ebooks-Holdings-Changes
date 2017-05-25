@@ -1,0 +1,114 @@
+[
+  {
+    "op": "core/row-removal",
+    "description": "Remove rows",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": [
+        {
+          "omitError": false,
+          "expression": "grel:or(value.contains('site.ebrary.com'), value.contains('osti.gov'))",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": true,
+                "l": "true"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "URL",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "URL"
+        }
+      ]
+    }
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column Combined at index 14 based on column URL using expression grel:cells['Title'].value + '^' + cells['Resource'].value + '^' + cells['URL'].value",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "Combined",
+    "columnInsertIndex": 14,
+    "baseColumnName": "URL",
+    "expression": "grel:cells['Title'].value + '^' + cells['Resource'].value + '^' + cells['URL'].value",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/row-removal",
+    "description": "Remove rows",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": [
+        {
+          "omitError": false,
+          "expression": "facetCount(value, 'value', 'Combined') > 1",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": true,
+                "l": "true"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "Combined",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "Combined"
+        }
+      ]
+    }
+  },
+  {
+    "op": "core/row-removal",
+    "description": "Remove rows",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": [
+        {
+          "omitError": false,
+          "expression": "value",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": "Earlier",
+                "l": "Earlier"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "Sheet Date",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "Sheet Date"
+        }
+      ]
+    }
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column Row Number",
+    "columnName": "Row Number"
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column Sheet Date",
+    "columnName": "Sheet Date"
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column Combined",
+    "columnName": "Combined"
+  }
+]
