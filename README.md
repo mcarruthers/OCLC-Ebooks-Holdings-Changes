@@ -1,5 +1,5 @@
 # OCLC-Ebooks-Holdings-Changes
-**Process and scripts under development and subject to change.
+DEPRICATED: please see https://github.com/mcarruthers/OCLC-serials-and-ebooks-R-scripts for updated workflow.
 
 1. Split files alphabetically 5 ways: 0-Dm, Dn-Dz, E-K, L-Nd, Ne-Z.
 2. Combine each of five files with corresponding file from previous load.
